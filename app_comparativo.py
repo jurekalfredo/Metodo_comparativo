@@ -98,11 +98,23 @@ INTERFACE_HTML = """
             </div>
         </div>
 
-        <div class="bloque-superior" style="grid-template-columns: repeat(4, 1fr); background-color: #f1f2f6;">
-            <div class="campo"><label>PROFESIONAL:</label><input type="text" name="profesional" value="Nombre apellido" style="padding:4px;"></div>
-            <div class="campo"><label>VALOR DÓLAR ($):</label><input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center;" oninput="calcularTodo()"></div>
-            <div class="campo"><label>ANTIGÜEDAD OBJETO:</label><input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center;"></div>
-            <div class="campo"><label>FOS / FOT OBJETO:</label><input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center;"></div>
+        <div class="bloque-superior" style="display: flex; justify-content: space-between; gap: 10px; background-color: #f1f2f6; padding: 12px;">
+            <div class="campo" style="flex: 1; min-width: 120px;">
+                <label style="font-size: 11px; white-space: nowrap;">PROFESIONAL:</label>
+                <input type="text" name="profesional" value="Nombre apellido" style="padding:4px; font-size:12px; width: 90%;">
+            </div>
+            <div class="campo" style="flex: 1; min-width: 100px;">
+                <label style="font-size: 11px; white-space: nowrap;">VALOR DÓLAR ($):</label>
+                <input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center; font-size:12px; width: 90%;" oninput="calcularTodo()">
+            </div>
+            <div class="campo" style="flex: 1; min-width: 110px;">
+                <label style="font-size: 11px; white-space: nowrap;">ANTIGÜEDAD:</label>
+                <input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
+            </div>
+            <div class="campo" style="flex: 1; min-width: 110px;">
+                <label style="font-size: 11px; white-space: nowrap;">FOS / FOT OBJETO:</label>
+                <input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
+            </div>
         </div>
 
         <table id="tabla-antecedentes">
