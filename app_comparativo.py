@@ -100,8 +100,8 @@ INTERFACE_HTML = """
 
         <div class="bloque-superior" style="grid-template-columns: repeat(4, 1fr); background-color: #f1f2f6;">
             <div class="campo"><label>PROFESIONAL:</label><input type="text" name="profesional" value="Nombre apellido" style="padding:4px;"></div>
-            <div class="campo"><label>VALOR DÓLAR ($):</label><input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center;" oni="calcularTodo()"></div>
-            <div class="campo"><label>ANTIGÜEDAD OBJETO:</label><input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center;"></div>nput
+            <div class="campo"><label>VALOR DÓLAR ($):</label><input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center;" oninput="calcularTodo()"></div>
+            <div class="campo"><label>ANTIGÜEDAD OBJETO:</label><input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center;"></div>
             <div class="campo"><label>FOS / FOT OBJETO:</label><input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center;"></div>
         </div>
 
@@ -233,7 +233,6 @@ function calcularTodo() {
             sumaHomog += vH;
             contadorActivos++;
             
-            // Estructuramos la fila para el anexo
             dataCompleta.push({
                 num: i,
                 ubi: document.getElementById(`ubi_${i}`).value,
@@ -270,26 +269,6 @@ window.onload = function() {
 </html>
 """
 
-# --- MOTOR CORREGIDO CON TABLA DE ANEXO INTERACTIVA ---
-def set_cell_border(cell, **kwargs):
-    """Auxiliar para meterle bordes negros finitos a las celdas del Word"""
-    tc = cell._tc
-    tcPr = tc.get_or_add_tcPr()
-    tcBorders = tcPr.first_child_found_in("w:tcBorders")
-    if tcBorders is None:
-        tcBorders = OxmlElement('w:tcBorders')
-        tcPr.append(tcBorders)
-    for edge in ('top', 'left', 'bottom', 'right', 'insideH', 'insideV'):
-        edge_data = kwargs.get(edge)
-        if edge_data:
-            tag = 'w:{}'.format(edge)
-            element = tcBorders.find(qn(tag))
-            if element is None:
-                element = OxmlElement(tag)
-                tcBorders.append(element)
-            for key, val in edge_data.items():
-                element.set(qn('w:{}'.format(key)), str(val))
-
 @app.route('/')
 def index():
     return render_template_string(INTERFACE_HTML)
@@ -306,7 +285,6 @@ def generar_word():
     fos_fot_obj = request.form.get('fos_fot_obj')
     
     coeficientes_completos = json.loads(request.form.get('coeficientes_json', '{}'))
-    tabla_completa = json.loads(request.form.get('tabla_completa_json', '[]'))
     nombres_coef = ["Actualización", "Ubicación", "Piso", "Planta", "Superficie", "Caract.", "Edad", "Estado", "F/F", "P/T"]
 
     doc = Document()
@@ -424,40 +402,6 @@ def generar_word():
     p_res_a.add_run("ALQUILER MENSUAL ESTIMADO:\n").bold = True
     p_res_a.add_run(f"• TOTAL USD: USD {alquiler_mensual_usd:,.2f}\n").bold = True
     p_res_a.add_run(f"• En Pesos: $ {alquiler_mensual_usd * valor_dolar:,.2f}\n\n")
-
-    # --- ANEXO: PLANILLA DE CÁLCULO (TU FUNCIÓN FALTANTE RESTAURADA) ---
-    h_anexo = doc.add_paragraph()
-    r_anexo = h_anexo.add_run("ANEXO: PLANILLA DE CÁLCULO (REFERENCIA DE ANTECEDENTES)")
-    r_anexo.font.name = 'Arial'; r_anexo.font.size = Pt(12); r_anexo.bold = True
-
-    # Creamos la tabla estructurada con las 6 columnas clave de tu visual del Excel
-    tabla_word = doc.add_table(rows=1, cols=6)
-    hdr_cells = tabla_word.rows[0].cells
-    encabezados_anexo = ["N°", "UBICACIÓN", "VALOR TOTAL", "SUP. m²", "COEF. TOTAL", "VALOR HOMOG."]
-    
-    border_style = {"sz": 4, "val": "single", "color": "000000"}
-
-    for idx, text in enumerate(encabezados_anexo):
-        hdr_cells[idx].text = text
-        hdr_cells[idx].paragraphs[0].runs[0].font.bold = True
-        hdr_cells[idx].paragraphs[0].runs[0].font.size = Pt(9.5)
-        hdr_cells[idx].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-        set_cell_border(hdr_cells[idx], top=border_style, bottom=border_style, left=border_style, right=border_style)
-
-    # Inyectamos las filas de datos reales cargadas desde el frontend web
-    for f in tabla_completa:
-        row_cells = tabla_word.add_row().cells
-        row_cells[0].text = str(f['num'])
-        row_cells[1].text = str(f['ubi'])
-        row_cells[2].text = f"USD {f['precio']:,.2f}"
-        row_cells[3].text = f"{f['sup']} m²"
-        row_cells[4].text = f"{f['coef']:.2f}"
-        row_cells[5].text = f"USD {f['homog']:,.2f}"
-        
-        for cell in row_cells:
-            cell.paragraphs[0].runs[0].font.size = Pt(9)
-            cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER
-            set_cell_border(cell, top=border_style, bottom=border_style, left=border_style, right=border_style)
 
     target = io.BytesIO()
     doc.save(target)
