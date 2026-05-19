@@ -67,7 +67,7 @@ INTERFACE_HTML = """
         <div class="bloque-superior">
             <div class="campo">
                 <label>OBJETO A TASAR (DIRECCIÓN):</label>
-                <input type="text" name="direccion_objeto" value="Sarmiento esquina Videla, Quilmes" style="padding:6px; font-weight:bold;">
+                <input type="text" name="direccion_objeto" value="Dirección, Localidad" style="padding:6px; font-weight:bold;">
             </div>
             <div class="campo">
                 <label>TIPO DE INMUEBLE (R20):</label>
@@ -100,9 +100,9 @@ INTERFACE_HTML = """
 
         <div class="bloque-superior" style="grid-template-columns: repeat(4, 1fr); background-color: #f1f2f6;">
             <div class="campo"><label>PROFESIONAL:</label><input type="text" name="profesional" value="Nombre apellido" style="padding:4px;"></div>
-            <div class="campo"><label>VALOR DÓLAR ($):</label><input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1000" style="padding:4px; text-align:center;" oninput="calcularTodo()"></div>
-            <div class="campo"><label>ANTIGÜEDAD OBJETO:</label><input type="number" name="antiguedad_obj" value="20" style="padding:4px; text-align:center;"></div>
-            <div class="campo"><label>FOS / FOT OBJETO:</label><input type="text" name="fos_fot_obj" value="0.60 / 3.00" style="padding:4px; text-align:center;"></div>
+            <div class="campo"><label>VALOR DÓLAR ($):</label><input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center;" oni="calcularTodo()"></div>
+            <div class="campo"><label>ANTIGÜEDAD OBJETO:</label><input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center;"></div>nput
+            <div class="campo"><label>FOS / FOT OBJETO:</label><input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center;"></div>
         </div>
 
         <table id="tabla-antecedentes">
