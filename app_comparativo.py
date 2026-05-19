@@ -108,11 +108,11 @@ INTERFACE_HTML = """
                 <input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center; font-size:12px; width: 90%;" oninput="calcularTodo()">
             </div>
             <div class="campo" style="flex: 1; min-width: 110px;">
-                <label style="font-size: 11px; white-space: nowrap;">ANTIGÜEDAD:</label>
+                <label style="font-size: 11px; white-space: nowrap;">ANTIGÜEDAD DEL CONSECUENTE:</label>
                 <input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
             </div>
             <div class="campo" style="flex: 1; min-width: 110px;">
-                <label style="font-size: 11px; white-space: nowrap;">FOS / FOT OBJETO:</label>
+                <label style="font-size: 11px; white-space: nowrap;">FOS / FOT CONSECUENTE:</label>
                 <input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
             </div>
         </div>
