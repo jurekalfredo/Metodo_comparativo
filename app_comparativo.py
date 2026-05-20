@@ -121,7 +121,7 @@ INTERFACE_HTML = """
                 <input type="text" name="profesional" value="Nombre apellido" style="padding:4px; font-size:12px; width: 90%;">
             </div>
             <div class="campo" style="flex: 1; min-width: 100px;">
-                <label style="font-size: 11px; white-space: nowrap;">Tipo de Cambio ($):</label>
+                <label style="font-size: 11px; white-space: nowrap;">TIPO DE CAMBIO ($):</label>
                 <input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center; font-size:12px; width: 90%;" oninput="calcularTodo()">
             </div>
             <div class="campo" style="flex: 1; min-width: 110px;">
