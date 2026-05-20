@@ -87,7 +87,7 @@ INTERFACE_HTML = """
                 <input type="text" name="direccion_objeto" value="Dirección, Localidad" style="padding:6px; font-weight:bold;">
             </div>
             <div class="campo">
-                <label>TIPO DE INMUEBLE (R20):</label>
+                <label>TIPO DE INMUEBLE :</label>
                 <select name="tipo_inmueble" class="input-amarillo">
                     <option value="CASA" selected>CASA</option>
                     <option value="DEPARTAMENTO">DEPARTAMENTO</option>
@@ -98,19 +98,19 @@ INTERFACE_HTML = """
                 </select>
             </div>
             <div class="campo">
-                <label>SUP. OBJETO m² (S3):</label>
+                <label>SUP. OBJETO m² :</label>
                 <input type="number" step="any" name="sup_objeto" id="sup_objeto" value="270" class="input-amarillo" oninput="calcularTodo()">
             </div>
             <div class="campo">
-                <label>VALOR TOTAL USD (U3):</label>
+                <label>VALOR TOTAL USD :</label>
                 <input type="text" id="valor_total_venta" name="valor_total_venta" class="input-verde" readonly value="USD 0.00">
             </div>
             <div class="campo">
-                <label>% RENT. AÑO (W3):</label>
+                <label>% RENT. AÑO :</label>
                 <input type="number" step="any" name="tasa_rentabilidad" id="tasa_rentabilidad" value="6.00" class="input-azul" oninput="calcularTodo()">
             </div>
             <div class="campo">
-                <label>ALQ. MENSUAL SUGERIDO (Y3):</label>
+                <label>ALQ. MENSUAL SUGERIDO :</label>
                 <input type="text" id="alquiler_sugerido" name="alquiler_sugerido" class="input-rosa" readonly value="USD 0.00">
             </div>
         </div>
