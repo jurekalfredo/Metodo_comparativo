@@ -170,7 +170,7 @@ INTERFACE_HTML = """
 
 <script>
 let listaCoeficientes = {}; 
-const nombresCoef = ["Actualización", "Ubicación", "Piso", "Planta", "Superficie", "Caract", "Edad", "Estado", "FF", "PT"];
+const nombresCoef = ["Actualización", "Ubicación", "Piso", "Planta", "Superficie", "Caracteristicas", "Edad", "Estado", "Frente/Fondo", "Patio/Terraza"];
 let filaActualModificando = null;
 
 function configurarTabla() {
