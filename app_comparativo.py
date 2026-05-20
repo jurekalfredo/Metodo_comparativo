@@ -5,12 +5,10 @@ from flask import Flask, render_template_string, request, send_file
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
 
 app = Flask(__name__)
 
-# --- FRONTEND CLONADO (HTML + CSS + JAVASCRIPT) ---
+# --- FRONTEND CON ALERTA VISUAL DE LÍMITES ---
 INTERFACE_HTML = """
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +27,7 @@ INTERFACE_HTML = """
         .btn-danger { background-color: #e74c3c; }
         
         /* Bloque Objeto Consecuente (Fila 3 de tu Excel) */
-        .bloque-superior { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; background-color: #fafafa; }
+        .bloque-superior { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 4px; background-color: #fafafa; }
         .campo { display: flex; flex-direction: column; }
         .campo label { font-weight: bold; font-size: 12px; margin-bottom: 5px; color: #2c3e50; }
         .input-amarillo { background-color: #ffffcc; border: 1px solid #999; padding: 6px; text-align: center; font-weight: bold; }
@@ -43,6 +41,15 @@ INTERFACE_HTML = """
         th { background-color: #f0f0f0; font-weight: bold; color: #333; font-size: 11px; }
         .input-tabla { width: 90%; padding: 4px; border: 1px solid #ddd; text-align: center; border-radius: 3px; }
         
+        /* Estilos de alerta para la celda fuera de rango */
+        .celda-rango-ok { font-weight: bold; background-color: transparent; color: #333; transition: 0.3s; }
+        .celda-rango-error { font-weight: bold; background-color: #ffcccc !important; color: #cc0000 !important; animation: parpadeo 1s infinite alternate; }
+        
+        @keyframes parpadeo {
+            from { background-color: #ffcccc; }
+            to { background-color: #ff9999; }
+        }
+
         /* Diálogos modales */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 20px; border-radius: 6px; width: 350px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -108,11 +115,11 @@ INTERFACE_HTML = """
                 <input type="number" step="any" name="valor_dolar" id="valor_dolar" value="1420" style="padding:4px; text-align:center; font-size:12px; width: 90%;" oninput="calcularTodo()">
             </div>
             <div class="campo" style="flex: 1; min-width: 110px;">
-                <label style="font-size: 11px; white-space: nowrap;">ANTIGÜEDAD DEL CONSECUENTE:</label>
+                <label style="font-size: 11px; white-space: nowrap;">ANTIGÜEDAD OBJETO:</label>
                 <input type="number" name="antiguedad_obj" value="10" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
             </div>
             <div class="campo" style="flex: 1; min-width: 110px;">
-                <label style="font-size: 11px; white-space: nowrap;">FOS / FOT CONSECUENTE:</label>
+                <label style="font-size: 11px; white-space: nowrap;">FOS / FOT OBJETO:</label>
                 <input type="text" name="fos_fot_obj" value="0.60 / 2.00" style="padding:4px; text-align:center; font-size:12px; width: 90%;">
             </div>
         </div>
@@ -178,7 +185,7 @@ function configurarTabla() {
                 <td>
                     <button type="button" class="btn btn-primary" style="padding:4px 8px; font-size:10px;" onclick="abrirModalCoef(${i})">⚙️ AJUSTAR COEF (10)</button>
                 </td>
-                <td><span id="coef_total_${i}" style="font-weight:bold;">1.00</span></td>
+                <td id="celda_coef_total_${i}" class="celda-rango-ok"><span id="coef_total_${i}">1.00</span></td>
                 <td><span id="val_homog_${i}" style="font-weight:bold; color:blue;">0.00</span></td>
             </tr>
         `;
@@ -198,7 +205,7 @@ function abrirModalCoef(id) {
         let html = `
             <div class="fila-modal">
                 <label>${nombre}:</label>
-                <input type="number" step="any" id="modal_input_${index}" value="${coefs[index]}">
+                <input type="number" step="0.01" id="modal_input_${index}" value="${coefs[index]}">
             </div>
         `;
         contenedor.insertAdjacentHTML('beforeend', html);
@@ -224,7 +231,16 @@ function calcularFila(id) {
     
     let coefs = listaCoeficientes[id];
     let coefTotal = coefs.reduce((a, b) => a * b, 1.0);
+    
     document.getElementById(`coef_total_${id}`).innerText = coefTotal.toFixed(2);
+    
+    // --- SENSOR DE RANGO EXCEL (<0.7 o >1.3 se pinta de Rojo) ---
+    let contenedorCelda = document.getElementById(`celda_coef_total_${id}`);
+    if (coefTotal < 0.70 || coefTotal > 1.30) {
+        contenedorCelda.className = "celda-rango-error";
+    } else {
+        contenedorCelda.className = "celda-rango-ok";
+    }
     
     let valHomog = valM2 * coefTotal;
     document.getElementById(`val_homog_${id}`).innerText = valHomog.toFixed(2);
