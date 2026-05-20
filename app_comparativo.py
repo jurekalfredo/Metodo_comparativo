@@ -193,7 +193,7 @@ function configurarTabla() {
                 <td><input type="number" step="any" name="fos_${i}" id="fos_${i}" value="0.60" class="input-tabla" oninput="calcularTodo()"></td>
                 <td><input type="number" step="any" name="fot_${i}" id="fot_${i}" value="3.00" class="input-tabla" oninput="calcularTodo()"></td>
                 <td>
-                    <button type="button" class="btn btn-primary" style="padding:4px 8px; font-size:10px;" onclick="abrirModalCoef(${i})">⚙️ AJUSTAR COEF </button>
+                    <button type="button" class="btn btn-primary" style="padding:4px 8px; font-size:10px;" onclick="abrirModalCoef(${i})">⚙️ AJUSTAR COEFICIENTE </button>
                 </td>
                 <td id="celda_coef_total_${i}" class="celda-rango-ok"><span id="coef_total_${i}">1.00</span></td>
                 <td><span id="val_homog_${i}" style="font-weight:bold; color:blue;">0.00</span></td>
