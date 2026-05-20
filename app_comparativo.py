@@ -156,7 +156,7 @@ INTERFACE_HTML = """
         <input type="hidden" name="tabla_completa_json" id="tabla_completa_json">
 
         <br>
-        <button type="submit" class="btn btn-success" style="width: 100%; padding: 14px; font-size: 16px;">🟩 GENERAR INFORME EN WORD COMPLETE (.DOCX)</button>
+        <button type="submit" class="btn btn-success" style="width: 100%; padding: 14px; font-size: 16px;">🟩 Descargar Informe Word (.DOCX)</button>
     </form>
 </div>
 
