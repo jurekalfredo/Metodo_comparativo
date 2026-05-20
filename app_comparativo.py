@@ -323,7 +323,7 @@ def generar_word():
     fos_fot_obj = request.form.get('fos_fot_obj')
     
     coeficientes_completos = json.loads(request.form.get('coeficientes_json', '{}'))
-    nombres_coef = ["Actualización", "Ubicación", "Piso", "Planta", "Superficie", "Caract.", "Edad", "Estado", "F/F", "P/T"]
+    nombres_coef = ["Actualización", "Ubicación", "Piso", "Planta", "Superficie", "Características", "Edad", "Estado", "Frente/Fondo", "Patio/Terraza"]
 
     doc = Document()
     
