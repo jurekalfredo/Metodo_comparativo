@@ -24,7 +24,7 @@ INTERFACE_HTML = """
         
         /* Encabezado Flexible para alinear Título y Logo */
         .header-tablero { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; position: relative; }
-        .logo-zwol { height: 80px; width: auto; object-fit: contain; }
+        .logo-zwol { height: 120px; width: auto; object-fit: contain; }
 
         /* Barra de herramientas superior */
         .toolbar { background-color: #e9ecef; padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; }
