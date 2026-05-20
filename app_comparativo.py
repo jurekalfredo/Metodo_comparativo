@@ -69,7 +69,7 @@ INTERFACE_HTML = """
 
 <div class="container">
     <div class="header-tablero">
-        <h2 style="color: #2c3e50; margin: 0; text-align: center;">📊 TABLERO TÉCNICO DE VALUACIÓN METODO COMPARATIVO</h2>
+        <h2 style="color: #2c3e50; margin: 0; text-align: center;"> TABLERO TÉCNICO DE VALUACIÓN METODO COMPARATIVO</h2>
         <img class="logo-zwol" src="https://raw.githubusercontent.com/jurekalfredo/Metodo_comparativo/main/Zwol.png" alt="Zwol Logo">
     </div>
     
