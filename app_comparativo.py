@@ -8,17 +8,24 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 app = Flask(__name__)
 
-# --- FRONTEND CON ALERTA VISUAL DE LÍMITES ---
+# --- FRONTEND CON LOGO E ICONO OFICIAL ZWOL ---
 INTERFACE_HTML = """
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sistema de Tasación Inmobiliaria</title>
+    <title>Sistema de Tasación Inmobiliaria - Zwol</title>
+    
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/jurekalfredo/Metodo_comparativo/main/Zwol.ico">
+    
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 20px; color: #333; }
         .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
+        /* Encabezado Flexible para alinear Título y Logo */
+        .header-tablero { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 20px; position: relative; }
+        .logo-zwol { height: 50px; width: auto; object-fit: contain; }
+
         /* Barra de herramientas superior */
         .toolbar { background-color: #e9ecef; padding: 15px; border-radius: 6px; margin-bottom: 20px; display: flex; gap: 15px; align-items: center; }
         .btn { padding: 10px 18px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; color: white; font-size: 14px; }
@@ -61,7 +68,10 @@ INTERFACE_HTML = """
 <body>
 
 <div class="container">
-    <h2 style="text-align: center; color: #2c3e50; margin-top:0;">📊 TABLERO TÉCNICO DE VALUACIÓN METODO COMPARATIVO  (by ZWOL Soft)</h2>
+    <div class="header-tablero">
+        <h2 style="color: #2c3e50; margin: 0; text-align: center;">📊 TABLERO TÉCNICO DE VALUACIÓN METODO COMPARATIVO</h2>
+        <img class="logo-zwol" src="https://raw.githubusercontent.com/jurekalfredo/Metodo_comparativo/main/Zwol.png" alt="Zwol Logo">
+    </div>
     
     <div class="toolbar">
         <label><b>Cantidad de Antecedentes (1-10):</b></label>
@@ -234,7 +244,7 @@ function calcularFila(id) {
     
     document.getElementById(`coef_total_${id}`).innerText = coefTotal.toFixed(2);
     
-    // --- SENSOR DE RANGO EXCEL (<0.7 o >1.3 se pinta de Rojo) ---
+    // Alerta visual de límites técnicos (<0.7 o >1.3)
     let contenedorCelda = document.getElementById(`celda_coef_total_${id}`);
     if (coefTotal < 0.70 || coefTotal > 1.30) {
         contenedorCelda.className = "celda-rango-error";
